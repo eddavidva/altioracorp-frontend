@@ -4,7 +4,7 @@ Este proyecto contiene la Interfaz para gestionar Clientes, Productos y Órdenes
 
 ### Antes de empezar
 
-Es importante mencionar que este proyecto funciona conjuntamente con un backend, por lo que no podrás probarlo sin haber descargado y ejecutado el proyecto ***AltioracorpSolution***. [Ir a Descargar](http://localhost/)
+Es importante mencionar que este proyecto funciona conjuntamente con un backend, por lo que no podrás probarlo sin haber descargado y ejecutado el proyecto ***AltioracorpSolution***. [Ir a Descargar](https://github.com/eddavidva/altioracorp-solution-backend)
 
 ### Empecemos
 Estas instrucciones te permitirán descargar una copia del proyecto y ejecutarlo en un ambiente de desarrollo.
