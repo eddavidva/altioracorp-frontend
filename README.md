@@ -21,7 +21,7 @@ Estas instrucciones te permitirán descargar una copia del proyecto y ejecutarlo
 ### Herramientas
 * [Bootstrap 4](https://getbootstrap.com/) - Framework CSS
 * [momentjs](https://momentjs.com/) - Manejo de fechas de forma fácil
-* [sweetalert2](https://rometools.github.io/rome/) - Mejorar el diseño de alertas
+* [sweetalert2](https://sweetalert2.github.io/) - Mejorar el diseño de alertas
 
 ### Autor
 * Edison David Valdivieso Arias
