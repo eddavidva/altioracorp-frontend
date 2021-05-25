@@ -1,27 +1,29 @@
-# Altioracorp
+# Altioracorp - Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.4.
+Este proyecto contiene la Interfaz para gestionar Clientes, Productos y Órdenes de Clientes.
 
-## Development server
+### Antes de empezar
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Es importante mencionar que este proyecto funciona conjuntamente con un backend, por lo que no podrás probarlo sin haber descargado y ejecutado el proyecto ***AltioracorpSolution***. [Ir a Descargar](http://localhost/)
 
-## Code scaffolding
+### Empecemos
+Estas instrucciones te permitirán descargar una copia del proyecto y ejecutarlo en un ambiente de desarrollo.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Instalación
+1. Descarga o clona el proyecto .
+2. Navega hacia la carpeta descargada mediante un programa de líneas de comando.
+3. Una vez dentro de la carpeta, ejecuta `npm install`
+4. En un editor de código abre la carpeta descargada.
+5. Navega hacia ___src/app/environments/environment.ts___ y cambia la propiedad ___apiUrl___ por la url y puerto del servidor en donde esta corriendo tu backend, no borres la palabra _api_. 
+`apiUrl: "http://servidor:puerto/api"`
+6. Regresa a tu programa de líneas de comando y ejecuta `ng serve -o`
 
-## Build
+### Herramientas
+* [Bootstrap 4](https://getbootstrap.com/) - Framework CSS
+* [momentjs](https://momentjs.com/) - Manejo de fechas de forma fácil
+* [sweetalert2](https://rometools.github.io/rome/) - Mejorar el diseño de alertas
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+###Autor
+* Edison David Valdivieso Arias
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

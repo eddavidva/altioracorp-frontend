@@ -1,0 +1,106 @@
+<h4 class="display-4">Órdenes <small *ngIf="order.IdOrder != 0"> -> {{order.IdOrder}}</small></h4>
+<hr>
+
+<div class="row">
+    <div class="col-12 col-md-5 mb-3">
+        <form #gForm="ngForm">
+            <div class="form-group">
+                <label>Fecha</label>
+                <input type="text" name="createdat" class="form-control form-control-sm" #createdat="ngModel"
+                    [(ngModel)]="order.CreatedAt" readonly>
+            </div>
+            <div class="form-group">
+                <label>*Cliente</label>
+                <select name="client" class="form-control form-control-sm" #client="ngModel" [(ngModel)]="order.IdClient" required>
+                    <option [value]="c.IdClient" *ngFor="let c of clients">{{c.FullName}}</option>
+                </select>
+                <div *ngIf="client.invalid && (client.dirty || client.touched)" class="text-danger">
+                    <small *ngIf="client.errors.required">El campo requerido.</small>
+                </div>
+            </div>
+        </form>
+        <form #pForm="ngForm">
+            <div class="row">
+                <div class="col-12 col-md-3">
+                    <div class="form-group">
+                        <label>*Cant. (0.00)</label>
+                        <input type="text" name="amount" class="form-control form-control-sm" #amount="ngModel" [(ngModel)]="orderDetail.Amount" pattern="^\d+(?:\.\d{1,2})?$" required>
+                        <div *ngIf="amount.invalid && (amount.dirty || amount.touched)" class="text-danger">
+                            <small *ngIf="amount.errors.required">Requerido.</small>
+                            <small *ngIf="amount.errors.pattern">Incorrecto.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-7">
+                    <div class="form-group">
+                        <label>*Producto</label>
+                        <select name="product" class="form-control form-control-sm" #product="ngModel" [(ngModel)]="orderDetail.IdProduct" required>
+                            <option [value]="p.IdProduct" *ngFor="let p of products">{{p.Name}}</option>
+                        </select>
+                        <div *ngIf="product.invalid && (product.dirty || product.touched)" class="text-danger">
+                            <small *ngIf="product.errors.required">El campo requerido.</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-2 pt-4">
+                    <button type="button" class="btn btn-success btn-block" (click)="addDetail(orderDetail)"
+                    [disabled]="pForm.invalid">+</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-sm mt-4">
+            <thead>
+                <tr class="table-success">
+                    <th>Cant</th>
+                    <th style="width: 50%;">Nombre</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let tmpDet of tempDetails; let i = index">
+                    <td>{{tmpDet.Amount}}</td>
+                    <td>{{tmpDet.Name}}</td>
+                    <td>{{tmpDet.Price | currency:'USD'}}</td>
+                    <td>{{tmpDet.Total | currency:'USD'}}</td>
+                    <td>
+                        <button type="button" class="btn btn-danger p-1 m-0" (click)="removeDetail(i)">X</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <button type="button" class="btn btn-primary" (click)="createOrder()"
+                [disabled]="gForm.invalid || tempDetails.length < 1" *ngIf="order.IdOrder == 0">Registar</button>
+        <button type="button" class="btn btn-primary" (click)="updateOrder()"
+        [disabled]="gForm.invalid || tempDetails.length < 1" *ngIf="order.IdOrder != 0">Actualizar</button>
+        <button type="button" class="btn btn-danger ml-2" (click)="deleteOrder()"
+         *ngIf="order.IdOrder != 0">Eliminar</button>
+         <button type="button" class="btn btn-secondary ml-2" (click)="reset()">Cancelar</button>
+    </div>
+    
+    <div class="col-12 col-md-7 mb-3">
+        <table class="table table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let o of orders">
+                    <td>{{o.IdOrder}}</td>
+                    <td>{{o.CreatedAt | date:"yyyy-MM-dd HH:mm"}}</td>
+                    <td>{{o.Client.FullName}}</td>
+                    <td>
+                        <button type="button" class="btn btn-link" (click)="editOrder(o)">Editar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

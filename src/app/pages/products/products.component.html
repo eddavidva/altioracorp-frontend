@@ -1,0 +1,53 @@
+<h4 class="display-4">Productos</h4>
+<hr>
+
+<div class="row">
+    <div class="col-12 col-md-4 mb-3">
+        <form #gForm="ngForm">
+            <div class="form-group">
+                <label>*Código</label>
+                <input type="text" name="code" class="form-control form-control-sm" #code="ngModel" [(ngModel)]="product.Code" required>
+                <div *ngIf="code.invalid && (code.dirty || code.touched)" class="text-danger">
+                    <small *ngIf="code.errors.required">El campo requerido.</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>*Nombre</label>
+                <input type="text" name="name" class="form-control form-control-sm" #name="ngModel" [(ngModel)]="product.Name" required>
+                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="text-danger">
+                    <small *ngIf="name.errors.required">El campo requerido.</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>*Precio (0.00)</label>
+                <input type="text" name="price" class="form-control form-control-sm"  #price="ngModel" [(ngModel)]="product.Price" pattern="^\d+(?:\.\d{1,2})?$" required>
+                <div *ngIf="price.invalid && (price.dirty || price.touched)" class="text-danger">
+                    <small *ngIf="price.errors.required">El campo requerido.</small>
+                    <small *ngIf="price.errors.pattern">El campo es incorrecto.</small>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="createProduct()" [disabled]="gForm.invalid">Registar</button>
+        </form>
+    </div>
+    <div class="col-12 col-md-8 mb-3">
+        <table class="table table-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of products">
+                    <td>{{p.IdProduct}}</td>
+                    <td>{{p.Code}}</td>
+                    <td>{{p.Name}}</td>
+                    <td>{{p.Price | currency:'USD'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
