@@ -23,7 +23,7 @@ Estas instrucciones te permitirán descargar una copia del proyecto y ejecutarlo
 * [momentjs](https://momentjs.com/) - Manejo de fechas de forma fácil
 * [sweetalert2](https://rometools.github.io/rome/) - Mejorar el diseño de alertas
 
-###Autor
+### Autor
 * Edison David Valdivieso Arias
 
 
