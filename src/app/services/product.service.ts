@@ -11,16 +11,12 @@ import { MessageService } from './message.service';
   providedIn: 'root',
 })
 export class ProductService {
-
-  constructor(
-    private http: HttpClient,
-    private msgService: MessageService
-    ) {}
+  constructor(private http: HttpClient, private msgService: MessageService) {}
 
   getProducts() {
-    const headers = new HttpHeaders({'content-type': 'application/json'});
+    const headers = new HttpHeaders({ 'content-type': 'application/json' });
     const url = `${environment.apiUrl}/products`;
-    return this.http.get(url, {headers}).pipe(
+    return this.http.get(url, { headers }).pipe(
       map((result: any) => {
         return result;
       }),
@@ -29,17 +25,32 @@ export class ProductService {
         console.log(result);
         return of(0);
       })
-      );
-    }
-    
-    createProduct(product: Product) {
-      const headers = new HttpHeaders({'content-type': 'application/json'});
-      const url = `${environment.apiUrl}/products`;
-      return this.http.post(url, JSON.stringify(product), {headers}).pipe(
-        map((result: any) => {
-          this.msgService.successToast(result.message);
-        }),
-        catchError(result => {
+    );
+  }
+
+  createProduct(product: Product) {
+    const headers = new HttpHeaders({ 'content-type': 'application/json' });
+    const url = `${environment.apiUrl}/products`;
+    return this.http.post(url, JSON.stringify(product), { headers }).pipe(
+      map((result: any) => {
+        this.msgService.successToast(result.message);
+      }),
+      catchError((result) => {
+        this.msgService.errorAlert(result.message);
+        console.log(result.message);
+        return of(0);
+      })
+    );
+  }
+
+  updateProduct(product: Product) {
+    const headers = new HttpHeaders({ 'content-type': 'application/json' });
+    const url = `${environment.apiUrl}/products/${product.IdProduct}`;
+    return this.http.put(url, JSON.stringify(product), { headers }).pipe(
+      /* map((result: any) => {
+        this.msgService.successToast(result.message);
+      }), */
+      catchError((result) => {
         this.msgService.errorAlert(result.message);
         console.log(result.message);
         return of(0);

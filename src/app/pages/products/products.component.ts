@@ -18,7 +18,7 @@ export class ProductsComponent implements OnInit {
 
   now: string = moment().format('YYYY-MM-DD HH:mm');
   products: Product[] = [];
-  product: Product = new Product(0,'','', null, this.now, this.now);
+  product: Product = new Product(0,'','', null, null, this.now, this.now);
 
   ngOnInit(): void {
     this.getProducts();
@@ -36,7 +36,7 @@ export class ProductsComponent implements OnInit {
   }
 
   reset() {
-    this.product = new Product(0,'','', null, this.now, this.now);
+    this.product = new Product(0,'','', null, null, this.now, this.now);
     this.gForm.form.markAsPristine();
     this.gForm.form.markAsUntouched();
     this.getProducts();

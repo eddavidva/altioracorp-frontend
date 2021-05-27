@@ -25,11 +25,14 @@ export class OrdersComponent implements OnInit {
   now: string = moment().format('YYYY-MM-DD HH:mm');
   clients: Client[] = [];
   products: Product[] = [];
+  product: Product = new Product(0, '', '', null, null, this.now, this.now);
   orders: Order[] = [];
   ordersDetail: OrderDetail[] = [];
   order: Order = new Order(0, null, this.now, this.now);
   orderDetail = new OrderDetail(0, null, null, 1, 0);
   tempDetails: any[] = [];
+
+  productsToUpdate: Product[] = [];
 
   constructor(
     private clientService: ClientService,
@@ -65,17 +68,28 @@ export class OrdersComponent implements OnInit {
 
   addDetail(od: OrderDetail) {
     //bconsole.log(this.products);
-    const product = this.products.find(
+    this.product = this.products.find(
       (p) => p.IdProduct == Number(od.IdProduct)
     );
+
+    
+    if (this.orderDetail.Amount > this.product.Stock) {
+      this.msgService.errorAlert("No se puede agregar el producto, el stock es insuficente");
+      return;
+    }
+
+    this.productsToUpdate.push(this.product);
+    // return;
     // console.log(product);
     const tempDetail = {
       Amount: od.Amount,
-      IdProduct: product.IdProduct,
-      Name: product.Name,
-      Price: product.Price,
-      Total: od.Amount * product.Price,
+      IdProduct: this.product.IdProduct,
+      Name: this.product.Name,
+      Price: this.product.Price,
+      Total: od.Amount * this.product.Price,
     };
+
+
 
     this.tempDetails.push(tempDetail);
     this.orderDetail = new OrderDetail(0, null, null, 1, 0);
@@ -95,6 +109,9 @@ export class OrdersComponent implements OnInit {
     await this.createOrderDetail(Number(result.data.IdOrder));
     this.msgService.successToast('La orden se ha registrado correctamente.');
 
+    // ACTUALIZAR  PRODUCTOS
+    this.updateProduct();
+    
     // RESET
     this.reset();
 
@@ -158,8 +175,11 @@ export class OrdersComponent implements OnInit {
     // CREAR EL NUEVO DETALLE
     this.createOrderDetail(this.order.IdOrder);
 
+    // ACTUALIZAR  PRODUCTOS
+    this.updateProduct();
+
     // ACTUALIZAR ORDEN
-    await this.orderService.updateOrder(this.order).toPromise();
+    await this.orderService.updateOrder(this.order).toPromise(); 
 
     // RESET
     this.reset();
@@ -208,8 +228,17 @@ export class OrdersComponent implements OnInit {
     });
   }
 
+  async updateProduct() {
+    this.productsToUpdate.forEach(async (product) => {
+      product.Stock = product.Stock - this.orderDetail.Amount;
+      // console.log(product);
+      await this.productService.updateProduct(product).toPromise();
+    });
+  }
+
   reset() {
     this.getOrders();
+    this.productsToUpdate = [];
     this.tempDetails = [];
     this.order = new Order(0, null, this.now, this.now);
     this.orderDetail = new OrderDetail(0, null, null, 1, 0);
